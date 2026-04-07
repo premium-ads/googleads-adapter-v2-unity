@@ -1,0 +1,57 @@
+name: Build Unity Package
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build-unitypackage:
+    name: Build .unitypackage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Cache Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Build .unitypackage
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: 6000.0.50f1
+          targetPlatform: Android
+          buildMethod: PremiumAds.Editor.PackageBuilder.BuildPackage
+          allowDirtyBuild: true
+
+      - name: Verify package
+        run: |
+          ls -la dist/
+          test -f dist/PremiumAdsGoogleAdapter.unitypackage
+
+      - name: Upload to release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/PremiumAdsGoogleAdapter.unitypackage
+
+      - name: Upload artifact (workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: PremiumAdsGoogleAdapter-unitypackage
+          path: dist/PremiumAdsGoogleAdapter.unitypackage

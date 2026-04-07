@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependencies>
+  <!-- Android dependency: PremiumAds AdMob Adapter V2 from JFrog -->
+  <androidPackages>
+    <androidPackage spec="net.premiumads.sdk:admob-adapter-v2:1.0.8">
+      <repositories>
+        <repository>https://repo.premiumads.net/artifactory/mobile-ads-sdk/</repository>
+      </repositories>
+    </androidPackage>
+  </androidPackages>
+
+  <!-- iOS dependency: PremiumAdsGoogleAdapter from CocoaPods -->
+  <iosPods>
+    <iosPod name="PremiumAdsGoogleAdapter" version="~> 1.0.6">
+      <sources>
+        <source>https://cdn.cocoapods.org/</source>
+      </sources>
+    </iosPod>
+  </iosPods>
+</dependencies>

@@ -2,7 +2,7 @@
 <dependencies>
   <!-- Android dependency: PremiumAds AdMob Adapter V2 from JFrog -->
   <androidPackages>
-    <androidPackage spec="net.premiumads.sdk:admob-adapter-v2:1.0.8">
+    <androidPackage spec="net.premiumads.sdk:admob-adapter-v2:1.0.9">
       <repositories>
         <repository>https://repo.premiumads.net/artifactory/mobile-ads-sdk/</repository>
       </repositories>
